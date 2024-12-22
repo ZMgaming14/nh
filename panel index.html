@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roblox Notruf Hamburg - Admin-Bewerbung</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqk1w2/knoG80kXw/8kgX2O/W/McDoOn8zK8/AM5v/z+yN0n+ZfpFiK/S9vH/0/5f+r9Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* ... (gleicher CSS-Code wie im vorherigen Beispiel) ... */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><i class="fas fa-user-shield"></i> Roblox Notruf Hamburg - Admin-Bewerbung</h1>
+    <form id="admin-bewerbung">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Dein Name" required>
+      </div>
+      <div class="form-group">
+        <label for="userid">Roblox UserID:</label>
+        <input type="text" id="userid" name="userid" placeholder="Deine Roblox UserID" required>
+      </div>
+      <div class="form-group">
+        <label for="motivation">Motivationsschreiben:</label>
+        <textarea id="motivation" name="motivation" rows="5" placeholder="Warum möchtest du Admin werden?" required></textarea>
+      </div>
+      <button type="submit">Bewerbung abschicken</button>
+    </form>
+    <div class="footer">
+      <p>Deine Bewerbung wird an den Discord-Server gesendet.</p>
+    </div>
+  </div>
+
+  <script>
+    const adminBewerbungForm = document.getElementById('admin-bewerbung');
+
+    adminBewerbungForm.addEventListener('submit', (event) => {
+      event.preventDefault(); // Verhindere das Standard-Formular-Senden
+
+      const name = document.getElementById('name').value;
+      const userid = document.getElementById('userid').value;
+      const motivation = document.getElementById('motivation').value;
+
+      // Hier musst du den Discord-Webhook-URL einfügen:
+      const webhookURL = 'https://discord.com/api/webhooks/1320484869876351088/Cp6U9O06T3Irzm0Kbh4WvwfomYd7zz4uPRBmEn8TH4DzKlf11JDs3uY9lnB0tDI9ZT5K'; // Ersetze durch deinen Webhook-URL
+
+      // Erstelle die Nachricht für Discord:
+      const messageData = {
+        content: `**Neue Admin-Bewerbung von:** ${name}\n**Roblox UserID:** ${userid}\n**Motivation:** ${motivation}`
+      };
+
+      // Sende die Nachricht an den Discord-Server:
+      fetch(webhookURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(messageData)
+      })
+      .then(response => {
+        // Wenn die Nachricht erfolgreich gesendet wurde, zeige eine Bestätigung an:
+        alert('Bewerbung erfolgreich gesendet!');
+        adminBewerbungForm.reset(); // Setze das Formular zurück
+      })
+      .catch(error => {
+        // Wenn ein Fehler auftritt, zeige eine Fehlermeldung an:
+        console.error('Fehler beim Senden der Bewerbung:', error);
+        alert('Fehler beim Senden der Bewerbung. Bitte versuche es später erneut.');
+      });
+    });
+  </script>
+</body>
+</html>
